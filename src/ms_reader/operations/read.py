@@ -1,6 +1,5 @@
 import os
 from dataclasses import dataclass
-from typing import Tuple
 
 import numpy as np
 from astropy.coordinates import SkyCoord
@@ -19,7 +18,7 @@ class Read:
     """"""
 
     @property
-    def frequencies(self) -> Tuple[float, float]:
+    def frequencies(self) -> NDArray:
         """
         """
         with tools.block_logging():
@@ -29,13 +28,8 @@ class Read:
                 ).getcol("CHAN_FREQ")
             except:
                 raise FileNotFoundError("expected a 'SPECTRAL_WINDOW' table with a 'CHAN_FREQ' column")
-        chan_freq = chan_freq.flatten()
-        if len(chan_freq) == 1:
-            return chan_freq[0], 0.
-        if chan_freq[1]-chan_freq[0] != chan_freq[-1]-chan_freq[-2]:
-            raise ValueError("channel frequency increment must be constant")
         
-        return chan_freq[0], chan_freq[1]-chan_freq[0]
+        return np.asarray(chan_freq.flatten())
 
     @property
     def phase_centre(self) -> SkyCoord:

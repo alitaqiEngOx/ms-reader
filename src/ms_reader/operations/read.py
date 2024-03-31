@@ -19,14 +19,6 @@ class Read:
     """"""
     
     @property
-    def saving_path(self) -> str:
-        """
-        """
-        return os.path.abspath(
-            os.path.join(self.ms_dir, os.pardir)
-        )
-    
-    @property
     def frequencies(self) -> NDArray:
         """
         """
@@ -58,6 +50,14 @@ class Read:
             raise ValueError("unsupported phase centre definition")
         return SkyCoord(
             phase_centre[0][0][0], phase_centre[0][0][1], unit="rad"
+        )
+
+    @property
+    def saving_path(self) -> str:
+        """
+        """
+        return os.path.abspath(
+            os.path.join(self.ms_dir, os.pardir)
         )
 
     @property

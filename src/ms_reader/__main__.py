@@ -10,6 +10,7 @@ logging.getLogger().setLevel(logging.INFO)
 
 def assert_errors(args: argparse.Namespace) -> None:
     """
+    Ensures the MeasurementSet directory exists.
     """
     if not os.path.exists(os.path.abspath(args.ms_dir)):
         raise FileNotFoundError(
@@ -18,12 +19,14 @@ def assert_errors(args: argparse.Namespace) -> None:
 
 def main() -> None:
     """
+    Entry to the pipeline.
     """
     args = parse_args()
     read.ms(args.ms_dir)
 
 def parse_args() -> argparse.Namespace:
     """
+    Parser for terminal arguments.
     """
     parser = argparse.ArgumentParser(
         description="MeasurementSet reader for radio astronomy",

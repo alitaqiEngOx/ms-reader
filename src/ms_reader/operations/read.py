@@ -17,6 +17,9 @@ class Read:
 
     ms_dir: str
     """"""
+
+    name: str
+    """"""
     
     @property
     def frequencies(self) -> NDArray:
@@ -111,33 +114,33 @@ class Read:
         plt.ylabel('v - wavenumbers')
         plt.title('UV tracks')
         plt.savefig(
-            os.path.join(self.saving_path, "uv_tracks.png")
+            os.path.join(self.saving_path, f"{self.name}_uv_tracks.png")
         )
         plt.close()
 
-    def to_npy(self, array: NDArray, *, name: str) -> None:
+    def to_npy(self, array: NDArray, *, var: str) -> None:
         """
         """
         np.save(
-            os.path.join(self.saving_path, f"{name}.npy"),
+            os.path.join(self.saving_path, f"{self.name}_{var}.npy"),
             array
         )
 
-    def to_txt(self, phase_centre: SkyCoord, *, name: str):
+    def to_txt(self, phase_centre: SkyCoord, *, var: str):
         """
         """
         line = f"phase centre (RA, DEC), deg = \
         ({phase_centre.ra.deg}, {phase_centre.dec.deg})"
-        with open(os.path.join(self.saving_path, f"{name}.txt"), 'w') as file:
+        with open(os.path.join(self.saving_path, f"{self.name}_{var}.txt"), 'w') as file:
             file.write(line)
 
 
-def ms(ms_dir: str) -> None:
+def ms(ms_dir: str, *, name: str) -> None:
     """
     """
-    ms = Read(ms_dir)
-    ms.to_npy(ms.frequencies, name="freq")
-    ms.to_txt(ms.phase_centre)
-    ms.to_npy(ms.uvw, name="uvw_geo")
-    ms.to_npy(ms.visibilities, name="vis")
+    ms = Read(ms_dir, name)
+    ms.to_npy(ms.frequencies, var="freq")
+    ms.to_txt(ms.phase_centre, var="phase_centre")
+    ms.to_npy(ms.uvw, var="uvw_geo")
+    ms.to_npy(ms.visibilities, var="vis")
     ms.uv_tracks(ms.frequencies)

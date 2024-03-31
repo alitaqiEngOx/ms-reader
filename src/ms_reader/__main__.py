@@ -22,7 +22,7 @@ def main() -> None:
     Entry to the pipeline.
     """
     args = parse_args()
-    read.ms(args.ms_dir)
+    read.ms(args.ms_dir, name=args.name)
 
 def parse_args() -> argparse.Namespace:
     """
@@ -36,6 +36,12 @@ def parse_args() -> argparse.Namespace:
         "ms_dir",
         type=str,
         help="input MeasurementSet directory"
+    )
+    parser.add_argument(
+        "--name",
+        type=str,
+        default="output",
+        help="name for output dir [default=output]"
     )
     return parser.parse_args()
 

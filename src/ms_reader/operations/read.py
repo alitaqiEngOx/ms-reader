@@ -123,12 +123,21 @@ class Read:
             array
         )
 
+    def to_txt(self, phase_centre: SkyCoord, *, name: str):
+        """
+        """
+        line = f"phase centre (RA, DEC), deg = \
+        ({phase_centre.ra.deg}, {phase_centre.dec.deg})"
+        with open(os.path.join(self.saving_path, f"{name}.txt"), 'w') as file:
+            file.write(line)
+
 
 def ms(ms_dir: str) -> None:
     """
     """
     ms = Read(ms_dir)
     ms.to_npy(ms.frequencies, name="freq")
+    ms.to_txt(ms.phase_centre)
     ms.to_npy(ms.uvw, name="uvw_geo")
     ms.to_npy(ms.visibilities, name="vis")
     ms.uv_tracks(ms.frequencies)

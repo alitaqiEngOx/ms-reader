@@ -90,6 +90,31 @@ class Read:
             raise ValueError("unsupported DATA with more than 4 dimensions")
         return np.asarray(visibilities)
 
+    def uv_tracks(self, chans: NDArray) -> None:
+        """
+        """
+        ax = plt.figure().add_subplot(111)
+        for chan in chans:
+            ax.scatter(
+                self.uvw[:, :, 0] * chan / 299792458.,
+                self.uvw[:, :, 1] * chan / 299792458.,
+                np.ones(len(self.uvw[:, :, 0])),
+                'k'
+            )
+            ax.scatter(
+                -self.uvw[:, :, 0] * chan / 299792458.,
+                -self.uvw[:, :, 1] * chan / 299792458.,
+                np.ones(len(self.uvw[:, :, 0])),
+                'k'
+            )
+        plt.xlabel('u - wavenumbers')
+        plt.ylabel('v - wavenumbers')
+        plt.title('UV tracks')
+        plt.savefig(
+            os.path.join(self.saving_path, "uv_tracks.png")
+        )
+        plt.close()
+
     def to_npy(self, array: NDArray, *, name: str) -> None:
         """
         """
@@ -106,3 +131,4 @@ def ms(ms_dir: str) -> None:
     ms.to_npy(ms.frequencies, name="freq")
     ms.to_npy(ms.uvw, name="uvw_geo")
     ms.to_npy(ms.visibilities, name="vis")
+    ms.uv_tracks(ms.frequencies)

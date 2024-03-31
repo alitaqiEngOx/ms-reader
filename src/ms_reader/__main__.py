@@ -3,9 +3,10 @@ import logging
 import os
 import time
 
+from operations import read
+
 
 logging.getLogger().setLevel(logging.INFO)
-
 
 def assert_errors(args: argparse.Namespace) -> None:
     """
@@ -19,6 +20,7 @@ def main() -> None:
     """
     """
     args = parse_args()
+    read.ms(args.ms_dir)
 
 def parse_args() -> argparse.Namespace:
     """

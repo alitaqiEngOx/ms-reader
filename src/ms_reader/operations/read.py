@@ -82,7 +82,7 @@ class Read:
         return np.asarray(visibilities)
 
 
-def read_ms(ms_dir: str) -> None:
+def ms(ms_dir: str) -> None:
     """
     """
     ms = Read(ms_dir)

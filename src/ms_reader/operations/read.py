@@ -80,3 +80,9 @@ class Read:
         if len(np.asarray(visibilities).shape) > 4:
             raise ValueError("unsupported DATA with more than 4 dimensions")
         return np.asarray(visibilities)
+
+
+def read_ms(ms_dir: str) -> None:
+    """
+    """
+    ms = Read(ms_dir)

@@ -1,9 +1,24 @@
 import argparse
 import logging
+import os
 import time
+
 
 logging.getLogger().setLevel(logging.INFO)
 
+
+def assert_errors(args: argparse.Namespace) -> None:
+    """
+    """
+    if not os.path.exists(os.path.abspath(args.ms_dir)):
+        raise FileNotFoundError(
+            f"{args.ms_dir} does not exist"
+        )
+
+def main() -> None:
+    """
+    """
+    args = parse_args()
 
 def parse_args() -> argparse.Namespace:
     """
@@ -17,15 +32,8 @@ def parse_args() -> argparse.Namespace:
         type=str,
         help="input MeasurementSet directory"
     )
-
     return parser.parse_args()
 
-
-def main() -> None:
-    """
-    """
-    args = parse_args()
-    return
 
 if __name__ == "__main__":
     start_time = time.time()

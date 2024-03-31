@@ -27,8 +27,9 @@ class Read:
                     os.path.join(self.ms_dir, "SPECTRAL_WINDOW")
                 ).getcol("CHAN_FREQ")
             except:
-                raise FileNotFoundError("expected a 'SPECTRAL_WINDOW' table with a 'CHAN_FREQ' column")
-        
+                raise FileNotFoundError(
+                    "expected a 'SPECTRAL_WINDOW' table with a 'CHAN_FREQ' column"
+                )
         return np.asarray(chan_freq.flatten())
 
     @property
@@ -46,7 +47,6 @@ class Read:
             )
         if np.array(phase_centre).shape != (1, 1, 2):
             raise ValueError("unsupported phase centre definition")
-        
         return SkyCoord(
             phase_centre[0][0][0], phase_centre[0][0][1], unit="rad"
         )
@@ -63,8 +63,9 @@ class Read:
         if len(np.asarray(uvw).shape) > 3:
             raise ValueError("unsupported UVW with more than 3 dimensions")
         if np.asarray(uvw).shape[-1] != 3:
-            raise ValueError("there must be 3 positional coordinates per observation")
-        
+            raise ValueError(
+                "there must be 3 positional coordinates per observation"
+            )
         return np.asarray(uvw)
 
     @property
@@ -78,5 +79,4 @@ class Read:
             raise FileNotFoundError("expected a 'DATA' column")
         if len(np.asarray(visibilities).shape) > 4:
             raise ValueError("unsupported DATA with more than 4 dimensions")
-
         return np.asarray(visibilities)

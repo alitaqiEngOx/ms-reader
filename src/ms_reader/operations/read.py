@@ -81,8 +81,20 @@ class Read:
             raise ValueError("unsupported DATA with more than 4 dimensions")
         return np.asarray(visibilities)
 
+    def to_npy(self, array: NDArray, *, name: str) -> None:
+        """
+        """
+        path = os.path.abspath(
+            os.path.join(self.ms_dir, os.pardir)
+        )
+        path = os.path.join(path, f"{name}.npy")
+        np.save(path, array)
+
 
 def ms(ms_dir: str) -> None:
     """
     """
     ms = Read(ms_dir)
+    ms.to_npy(ms.frequencies, name="freq")
+    ms.to_npy(ms.uvw, name="uvw_geo")
+    ms.to_npy(ms.visibilities, name="vis")

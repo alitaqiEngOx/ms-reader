@@ -1,6 +1,7 @@
 import os
 from dataclasses import dataclass
 
+import matplotlib.pyplot as plt
 import numpy as np
 from astropy.coordinates import SkyCoord
 from casacore.tables import table
@@ -16,7 +17,15 @@ class Read:
 
     ms_dir: str
     """"""
-
+    
+    @property
+    def saving_path(self) -> str:
+        """
+        """
+        return os.path.abspath(
+            os.path.join(self.ms_dir, os.pardir)
+        )
+    
     @property
     def frequencies(self) -> NDArray:
         """
@@ -84,11 +93,10 @@ class Read:
     def to_npy(self, array: NDArray, *, name: str) -> None:
         """
         """
-        path = os.path.abspath(
-            os.path.join(self.ms_dir, os.pardir)
+        np.save(
+            os.path.join(self.saving_path, f"{name}.npy"),
+            array
         )
-        path = os.path.join(path, f"{name}.npy")
-        np.save(path, array)
 
 
 def ms(ms_dir: str) -> None:

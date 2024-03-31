@@ -13,17 +13,19 @@ from utils import tools
 @dataclass
 class Read:
     """
+    Class to access, read & export MeasurementSet data.
     """
 
     ms_dir: str
-    """"""
+    """MeasurementSet directory."""
 
     name: str
-    """"""
+    """Name for outputs."""
     
     @property
     def frequencies(self) -> NDArray:
         """
+        MeasurementSet frequency channels.
         """
         with tools.block_logging():
             try:
@@ -39,6 +41,7 @@ class Read:
     @property
     def phase_centre(self) -> SkyCoord:
         """
+        MeasurementSet phase centre.
         """
         try:
             with tools.block_logging():
@@ -58,6 +61,7 @@ class Read:
     @property
     def saving_path(self) -> str:
         """
+        Path to save outputs.
         """
         return os.path.abspath(
             os.path.join(self.ms_dir, os.pardir)
@@ -66,6 +70,7 @@ class Read:
     @property
     def uvw(self) -> NDArray:
         """
+        MeasurementSet UVW coordinates.
         """
         try:
             with tools.block_logging():
@@ -83,6 +88,7 @@ class Read:
     @property
     def visibilities(self) -> NDArray:
         """
+        MeasurementSet Visiblities.
         """
         try:
             with tools.block_logging():
@@ -95,6 +101,7 @@ class Read:
 
     def uv_tracks(self, chans: NDArray) -> None:
         """
+        Exports UV tracks of for all channels as a .png.
         """
         ax = plt.figure().add_subplot(111)
         for chan in chans:
@@ -120,6 +127,7 @@ class Read:
 
     def to_npy(self, array: NDArray, *, var: str) -> None:
         """
+        Exports numpy arrays as .npy binaries.
         """
         np.save(
             os.path.join(self.saving_path, f"{self.name}_{var}.npy"),
@@ -128,6 +136,7 @@ class Read:
 
     def to_txt(self, phase_centre: SkyCoord, *, var: str):
         """
+        Exports phase centre as a .txt.
         """
         line = f"phase centre (RA, DEC), deg = \
         ({phase_centre.ra.deg}, {phase_centre.dec.deg})"
@@ -137,6 +146,7 @@ class Read:
 
 def ms(ms_dir: str, *, name: str) -> None:
     """
+    Entry function to call the Read class on a MeasurementSet.
     """
     ms = Read(ms_dir, name)
     ms.to_npy(ms.frequencies, var="freq")

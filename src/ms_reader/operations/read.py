@@ -103,18 +103,19 @@ class Read:
         """
         Exports UV tracks of for all channels as a .png.
         """
+        print(self.uvw.shape)
         ax = plt.figure().add_subplot(111)
         for chan in chans:
             ax.scatter(
-                self.uvw[:, :, 0] * chan / 299792458.,
-                self.uvw[:, :, 1] * chan / 299792458.,
-                np.ones(len(self.uvw[:, :, 0])),
+                self.uvw[:, 0] * chan / 299792458.,
+                self.uvw[:, 1] * chan / 299792458.,
+                np.ones(len(self.uvw[:, 0])),
                 'k'
             )
             ax.scatter(
-                -self.uvw[:, :, 0] * chan / 299792458.,
-                -self.uvw[:, :, 1] * chan / 299792458.,
-                np.ones(len(self.uvw[:, :, 0])),
+                -self.uvw[:, 0] * chan / 299792458.,
+                -self.uvw[:, 1] * chan / 299792458.,
+                np.ones(len(self.uvw[:, 0])),
                 'k'
             )
         plt.xlabel('u - wavenumbers')

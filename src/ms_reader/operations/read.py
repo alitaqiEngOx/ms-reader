@@ -142,8 +142,7 @@ class Read:
         """
         Exports phase centre as a .txt.
         """
-        line = f"phase centre (RA, DEC), deg = \
-        ({phase_centre.ra.deg}, {phase_centre.dec.deg})"
+        line = f"phase centre (RA, DEC), deg = ({phase_centre.ra.deg}, {phase_centre.dec.deg})"
         with open(os.path.join(self.saving_path, f"{self.name}_{var}.txt"), 'w') as file:
             file.write(line)
 

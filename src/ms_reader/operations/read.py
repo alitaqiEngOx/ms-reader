@@ -102,6 +102,7 @@ class Read:
     def uv_tracks(self, chans: NDArray) -> None:
         """
         Exports UV tracks of for all channels as a .png.
+        Assumes UVW data are 2-dimensional.
         """
         print(self.uvw.shape)
         ax = plt.figure().add_subplot(111)

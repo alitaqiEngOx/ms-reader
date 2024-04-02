@@ -63,9 +63,8 @@ class Read:
         """
         Path to save outputs.
         """
-        return os.path.abspath(
-            os.path.join(self.ms_dir, os.pardir)
-        )
+        pardir = os.path.abspath(os.path.join(self.ms_dir, os.pardir))
+        return os.path.join(pardir, f"{self.name}")
 
     @property
     def uvw(self) -> NDArray:
@@ -133,6 +132,8 @@ class Read:
         """
         Exports numpy arrays as .npy binaries.
         """
+        if not os.path.exists(self.saving_path):
+            os.mkdir(self.saving_path)
         np.save(
             os.path.join(self.saving_path, f"{self.name}_{var}.npy"),
             array
@@ -142,6 +143,8 @@ class Read:
         """
         Exports phase centre as a .txt.
         """
+        if not os.path.exists(self.saving_path):
+            os.mkdir(self.saving_path)
         line = f"phase centre (RA, DEC), deg = ({phase_centre.ra.deg}, {phase_centre.dec.deg})"
         with open(os.path.join(self.saving_path, f"{self.name}_{var}.txt"), 'w') as file:
             file.write(line)

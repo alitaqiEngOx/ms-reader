@@ -103,7 +103,6 @@ class Read:
         Exports UV tracks of for all channels as a .png.
         Assumes UVW data are 2-dimensional.
         """
-        print(self.uvw.shape)
         ax = plt.figure().add_subplot(111)
         for chan in chans:
             ax.scatter(

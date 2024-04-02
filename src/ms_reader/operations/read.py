@@ -119,11 +119,13 @@ class Read:
                 np.ones(len(self.uvw[:, 0])),
                 'k'
             )
+        ax.set_aspect("equal")
         plt.xlabel('u - wavenumbers')
         plt.ylabel('v - wavenumbers')
         plt.title('UV tracks')
         plt.savefig(
-            os.path.join(self.saving_path, f"{self.name}_uv_tracks.png")
+            os.path.join(self.saving_path, f"{self.name}_uv_tracks.png"),
+            dpi=500
         )
         plt.close()
 
